@@ -3,7 +3,7 @@
  *
  * Generate an init snippet to install the AWS cli tool on boot. This will:
  *
- * * use apt to install `python-pip`
+ * * use apt/yum to install `python-pip`
  * * use `pip` to upgrade `pip`
  * * us `pip` to install `awscli`
  *
@@ -14,6 +14,12 @@ variable "init_prefix" {
   default     = ""
   description = "initial init (shellcode) to prefix this snippet with"
   type = string
+}
+
+variable "install_cmd" {
+  default     = "apt install -y"
+  description = "package manager install command (`apt install -y` by default)"
+  type        = string
 }
 
 variable "init_suffix" {
@@ -34,6 +40,7 @@ data "template_file" "init_snippet" {
 
   vars = {
     init_prefix = var.init_prefix
+    install_cmd = var.install_cmd
     init_suffix = var.init_suffix
     log_prefix  = var.log_prefix
   }

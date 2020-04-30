@@ -7,6 +7,9 @@
 * nat-gateways: Fix association issue caused between `nat_eip` and
   public subnets. This only affects resources using the `nat_eip` variable.
 
+* `init-snippet-install-awscli`: new argument to allow not only `apt` as a
+  command to install OS packages
+
 ### Examples
 
 # v0.9.16
