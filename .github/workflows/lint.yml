@@ -1,0 +1,18 @@
+name: Lint
+
+on: [push, pull_request]
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Log into Github registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+      - name: Lint
+        run: |
+            docker run -v $(pwd):/src --rm docker.pkg.github.com/fpco/terraform-aws-foundation/lint:bdae808b0d523c6f93c4c477c87924875f0ec0a4 bash -c "cd /src && bash ./scripts/ci/tfinit.sh && bash ./scripts/ci/tflint.sh"

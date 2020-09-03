@@ -1,0 +1,23 @@
+name: Build lint image
+
+on:
+  push:
+    branches: [lint-image]
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Log into Github registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+      - name: Build lint image
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/lint:$GITHUB_SHA
+          docker build .github/workflows -f .github/workflows/Dockerfile.lint --tag $IMAGE_ID
+          docker push $IMAGE_ID
+          echo Pushed new lint image $IMAGE_ID

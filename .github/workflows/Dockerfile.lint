@@ -1,0 +1,22 @@
+FROM fpco/pid1:18.04
+
+# Install required Ubuntu packages
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+     ca-certificates \
+     curl \
+     unzip \
+ && apt-get clean  \
+ && rm -rf /var/lib/apt/lists/*
+
+# Install Terraform
+ARG TERRAFORM_VERSION=0.12.24
+RUN curl -Lo terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
+ && unzip terraform.zip -d /usr/local/bin \
+ && terraform --version
+
+# Install Terraform Lint TFLint
+ARG TFLINT_VERSION=v0.9.1
+RUN curl -Lo tflint.zip https://github.com/wata727/tflint/releases/download/${TFLINT_VERSION}/tflint_linux_amd64.zip \
+ && unzip tflint.zip -d /usr/local/bin  \
+ && tflint --version
