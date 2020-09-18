@@ -9,3 +9,6 @@ See [this RFC](https://docs.google.com/document/d/15nEcV7fxskDgYrXoNMl6RYIo10PCi
 and [this ticket](https://github.com/hashicorp/terraform/issues/386) for more
 details on that.
 
+## Deprecated
+
+With `aws_kms_grant` resource introduced, and in the case that host running the module does not have AWSCLI, this module is deprecated. Please use `credstash-grant-reader`, `credstash-grant-writer`.

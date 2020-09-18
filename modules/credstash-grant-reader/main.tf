@@ -24,16 +24,10 @@ variable "reader_policy_arn" {
   type        = string
 }
 
-variable "context_keys" {
-  default     = []
-  description = "list of keys to be zipped with the context_values to set an 'encryption context' for additional granularity that clients are required to provide to read encrypted values. Eg. for env=dev svc=db, this would be [env, svc]. All readers get this context map."
-  type        = list(string)
-}
-
-variable "context_values" {
-  default     = []
-  description = "list of values to be zipped with the context_keys to set an 'encryption context' for additional granularity that clients are required to provide to read encrypted values. Eg. for env=dev svc=db, this would be [dev, db]. All readers get this context map."
-  type        = list(string)
+variable "context" {
+  default     = {}
+  description = "Context for additional granularity that clients are required to provide to read encrypted values."
+  type        = map(string)
 }
 
 resource "aws_iam_role_policy_attachment" "credstash-reader-policy-attachment" {
@@ -48,11 +42,6 @@ resource "aws_kms_grant" "credstash-reader" {
   grantee_principal = var.role_arns[count.index]
   key_id            = var.kms_key_arn
   operations        = ["Decrypt"]
-
-  constraints {
-    encryption_context_equals = {
-      element(var.context_keys, count.index) = element(var.context_values, count.index)
-    }
-  }
+  constraints { encryption_context_equals = var.context }
 }
 
