@@ -28,6 +28,5 @@ variable "extra_tags" {
 variable "public" {
   default     = true
   description = "Boolean, maps to the map_public_ip_on_launch variable"
-  type        = string # no boolean type...
+  type        = bool
 }
-

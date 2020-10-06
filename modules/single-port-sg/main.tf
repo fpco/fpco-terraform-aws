@@ -15,6 +15,12 @@ variable "cidr_blocks" {
   type        = list(string)
 }
 
+variable "ipv6_cidr_blocks" {
+  description = "List of IPv6 CIDR block ranges that the SG allows ingress from"
+  type        = list(string)
+  default     = []
+}
+
 variable "description" {
   description = "Use this string to add a description for the SG rule"
   type        = string
@@ -51,6 +57,7 @@ resource "aws_security_group_rule" "tcp_ingress" {
   to_port           = var.port
   protocol          = "tcp"
   cidr_blocks       = var.cidr_blocks
+  ipv6_cidr_blocks  = var.ipv6_cidr_blocks
   security_group_id = var.security_group_id
 }
 
@@ -63,5 +70,6 @@ resource "aws_security_group_rule" "udp_ingress" {
   to_port           = var.port
   protocol          = "udp"
   cidr_blocks       = var.cidr_blocks
+  ipv6_cidr_blocks  = var.ipv6_cidr_blocks
   security_group_id = var.security_group_id
 }

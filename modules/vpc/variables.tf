@@ -35,6 +35,13 @@ variable "dns_servers" {
   default     = ["AmazonProvidedDNS"]
   description = "list of DNS servers for the DHCP options resource"
   type        = list(string)
+
+}
+
+variable "assign_generated_ipv6_cidr_block" {
+  description = "Whether to request an Amazon-provided IPv6 CIDR block with a /56 prefix length for the VPC"
+  type        = bool
+  default     = false
 }
 
 variable "ntp_servers" {

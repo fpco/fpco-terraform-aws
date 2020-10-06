@@ -41,3 +41,10 @@ resource "aws_route" "public" {
   depends_on             = [aws_route_table.public]
 }
 
+resource "aws_route" "public6" {
+  # TODO make this optional or control with count
+  route_table_id         = aws_route_table.public.id
+  destination_ipv6_cidr_block = "::/0"
+  gateway_id             = aws_internet_gateway.public.id
+  depends_on             = [aws_route_table.public]
+}

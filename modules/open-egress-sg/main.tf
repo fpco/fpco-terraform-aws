@@ -18,6 +18,12 @@ variable "cidr_blocks" {
   type        = list(string)
 }
 
+variable "ipv6_cidr_blocks" {
+  description = "Allow egress to these IPv6 CIDR blocks"
+  type        = list(string)
+  default     = []
+}
+
 variable "description" {
   description = "use this string to generate a description for the SG rules"
   default     = "OPEN egress, all ports, all protocols"
@@ -32,6 +38,7 @@ resource "aws_security_group_rule" "open_egress" {
   to_port           = "0"
   protocol          = "-1"
   cidr_blocks       = var.cidr_blocks
+  ipv6_cidr_blocks  = var.ipv6_cidr_blocks
   security_group_id = var.security_group_id
 }
 
