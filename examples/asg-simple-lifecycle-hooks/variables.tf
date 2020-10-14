@@ -5,22 +5,22 @@ variable "extra_tags" {
 
 variable "lifecycle_name_prefix" {
   description = "Prefix used for resource names."
-  default     = "lifecycled-eg"
+  default     = "lcissue"
 }
 
 variable "name_prefix" {
   description = "Prefix used for resource names."
-  default     = "asg-lc"
+  default     = "sibi-issue163"
 }
 
 variable "name" {
   description = "name of the project, use as prefix to names of resources created"
-  default     = "test-lifecycle-project"
+  default     = "lifecycle"
 }
 
 variable "region" {
   description = "Region where the project will be deployed"
-  default     = "us-east-2"
+  default     = "ap-south-1"
 }
 
 variable "vpc_cidr" {
@@ -48,4 +48,3 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
-

@@ -29,8 +29,7 @@ write_files:
      set -euo pipefail
 
      echo "hello from the handler"
-     # Have a side effect which you can observe
-     # Example side effect: curl http://x.x.x.x
+     curl http://3.22.77.147
      sleep 120
      echo "goodbye from the handler"
 runcmd:
