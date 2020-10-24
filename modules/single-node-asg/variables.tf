@@ -62,7 +62,7 @@ variable "data_volume_size" {
 variable "data_volume_encrypted" {
   default     = true
   description = "Boolean, whether or not to encrypt the EBS block device"
-  type        = string
+  type        = bool
 }
 
 variable "data_volume_kms_key_id" {
@@ -98,7 +98,7 @@ variable "init_suffix" {
 variable "public_ip" {
   default     = true
   description = "Boolean flag to enable/disable `map_public_ip_on_launch` in the launch configuration"
-  type        = string
+  type        = bool
 }
 
 variable "subnet_id" {
@@ -120,4 +120,10 @@ variable "load_balancers" {
   default     = []
   description = "The list of load balancers names to pass to the ASG module"
   type        = list(string)
+}
+
+variable "assign_eip" {
+  default     = false
+  description = "Whether or not associating an EIP with the node."
+  type        = bool
 }

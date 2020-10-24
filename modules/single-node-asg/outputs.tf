@@ -12,3 +12,7 @@ output "data_volume_name_tag" {
   value       = "${local.data_volume_name_prefix}-${local.az}"
   description = "Name tag value for attached data volume"
 }
+
+output "eip_address" {
+  value = var.assign_eip ? aws_eip.eip.*[0].public_ip : ""
+}
