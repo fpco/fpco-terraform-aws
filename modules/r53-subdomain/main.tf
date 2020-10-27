@@ -22,14 +22,21 @@ variable "ttl" {
 }
 
 variable "vpc_id" {
-  description = "The VPC ID to associate a private zone with (leave blank for public zone)"
+  description = "The VPC ID to associate a private zone with (leave blank for public zone), use assocations for linking multiple VPCs"
   default     = ""
   type        = string
 }
 
 resource "aws_route53_zone" "subdomain" {
   name   = var.name
-  vpc_id = var.vpc_id
+
+  dynamic "vpc" {
+    for_each = [var.vpc_id]
+
+    content {
+      vpc_id = var.vpc_id
+    }
+  }
 }
 
 resource "aws_route53_record" "subdomain-NS" {
