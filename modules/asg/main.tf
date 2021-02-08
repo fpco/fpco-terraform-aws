@@ -31,7 +31,7 @@ resource "aws_autoscaling_group" "cluster" {
   load_balancers            = var.elb_names
   max_size                  = var.max_nodes
   min_size                  = var.min_nodes
-  name_prefix               = "${var.name_prefix}-${var.name_suffix}"
+  name_prefix               = local.name_prefix
   placement_group           = var.placement_group
   termination_policies      = var.termination_policies
   protect_from_scale_in     = var.protect_from_scale_in
@@ -71,7 +71,7 @@ resource "aws_autoscaling_group" "cluster" {
     [
       {
         "key"                 = "Name"
-        "value"               = "${var.name_prefix}-${var.name_suffix}"
+        "value"               = local.name_prefix
         "propagate_at_launch" = true
       },
     ],

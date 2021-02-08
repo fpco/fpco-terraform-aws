@@ -11,7 +11,6 @@ resource "aws_lb_listener" "lb-listener" {
 }
 
 resource "aws_lb_target_group" "lb-tg" {
-  name     = "${var.name_prefix}-tg"
   port     = var.service_port
   protocol = "HTTP"
   vpc_id   = var.vpc_id

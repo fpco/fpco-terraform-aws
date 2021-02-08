@@ -1,5 +1,5 @@
-output "volume_id" {
-  value       = aws_ebs_volume.main.id
+output "volume_ids" {
+  value       = aws_ebs_volume.main.*.id
   description = "`id` exported from the `aws_ebs_volume`"
 }
 

@@ -9,17 +9,19 @@
  */
 
 resource "aws_ebs_volume" "main" {
+  count = length(local.volumes_default)
+
   availability_zone = var.az
-  size              = var.size
-  type              = var.volume_type
-  encrypted         = var.encrypted
-  kms_key_id        = var.kms_key_id
-  snapshot_id       = var.snapshot_id
+  size              = local.volumes_default[count.index].size
+  type              = local.volumes_default[count.index].type
+  encrypted         = local.volumes_default[count.index].encrypted
+  kms_key_id        = local.volumes_default[count.index].kms_key_id
+  snapshot_id       = local.volumes_default[count.index].snapshot_id
 
   # merge Name w/ extra_tags
   tags = merge(
     {
-      "Name" = "${var.name_prefix}-${var.az}"
+      "Name" = "${var.name_prefix}-${var.az}-${local.volumes_default[count.index].name}"
     },
     var.extra_tags,
   )
@@ -27,7 +29,7 @@ resource "aws_ebs_volume" "main" {
 
 # IAM policy that allows attaching this EBS volume to an EC2 instance
 resource "aws_iam_policy" "attach_ebs" {
-  name   = "${var.name_prefix}-attach-ebs-${aws_ebs_volume.main.id}"
+  name   = "${var.name_prefix}-attach-ebs"
   policy = data.aws_iam_policy_document.attach_ebs_policy_doc.json
 }
 
